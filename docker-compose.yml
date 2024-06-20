@@ -1,44 +1,43 @@
-networks:
-  mynetwork:
-    driver: bridge
+version: '3.8'
 
 services:
-  placetogrow_laravel:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: place_to_grow_laravel
+    container_name: placetogrow_laravel
     ports:
       - "8000:8000"
     volumes:
-      - ./:/var/www/app
+      - .:/app/z
     depends_on:
-      - placetogrow_mysql
-    networks:
-      - mynetwork
+      - mysql
+    restart: unless-stopped
 
-  placetogrow_mysql:
+  mysql:
     image: mysql:latest
-    container_name: place_to_grow_mysql
+    container_name: placetogrow_mysql
+    restart: unless-stopped
     ports:
       - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql:/docker-entrypoint-initdb.d
     environment:
-      - MYSQL_DATABASE=${DB_DATABASE:-placetogrow}
-      - MYSQL_USER=${DB_USERNAME:-placetogrow}
-      - MYSQL_PASSWORD=${DB_PASSWORD:-placetogrow}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-placetogrow}
-    networks:
-      - mynetwork
+      MYSQL_DATABASE: placetogrow
+      MYSQL_ROOT_PASSWORD: placetogrow123Root*
 
-  placetogrow_nginx:
+  nginx:
     image: nginx:alpine
-    container_name: place_to_grow_nginx
+    container_name: placetogrow_nginx
     ports:
       - "80:80"
     volumes:
       - ./:/var/www/app
-      - ./compose/nginx/:/etc/nginx/conf.d/
+      - ./nginx:/etc/nginx/conf.d:ro
     depends_on:
-      - placetogrow_laravel
-    networks:
-      - mynetwork
+      - app
+      - mysql
+
+volumes:
+  mysql-data:

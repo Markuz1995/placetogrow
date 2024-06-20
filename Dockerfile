@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     make \
     pkgconfig \
     npm \
+    nodejs \
     freetype-dev \
     libjpeg-turbo-dev \
     libpng-dev \
@@ -38,15 +39,17 @@ WORKDIR /app
 
 COPY . .
 
-RUN composer install
-
 RUN npm install
+
+
+RUN composer install --no-dev --optimize-autoloader
 
 RUN php artisan key:generate
 
-RUN composer require laravel/octane spiral/roadrunner
-RUN php artisan octane:install --server="swoole"
+RUN composer require laravel/octane spiral/roadrunner \
+    && php artisan octane:install --server="swoole"
 
 CMD php artisan migrate --force && php artisan octane:start --server="swoole" --host="0.0.0.0"
+
 
 EXPOSE 8000
