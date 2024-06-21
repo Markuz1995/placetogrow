@@ -1,43 +1,32 @@
-version: '3.8'
-
+version: '3'
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: placetogrow_laravel
+    container_name: laravel_app
     ports:
       - "8000:8000"
     volumes:
-      - .:/app/z
+      - .:/var/www/html
     depends_on:
-      - mysql
-    restart: unless-stopped
+      - db
+    environment:
+      DB_HOST: db
+      DB_DATABASE: laravel
+      DB_USERNAME: root
+      DB_PASSWORD: password
 
-  mysql:
-    image: mysql:latest
-    container_name: placetogrow_mysql
-    restart: unless-stopped
+  db:
+    image: mysql:8.0
+    container_name: laravel_db
     ports:
       - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - ./mysql:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: placetogrow
-      MYSQL_ROOT_PASSWORD: placetogrow123Root*
-
-  nginx:
-    image: nginx:alpine
-    container_name: placetogrow_nginx
-    ports:
-      - "80:80"
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: password
     volumes:
-      - ./:/var/www/app
-      - ./nginx:/etc/nginx/conf.d:ro
-    depends_on:
-      - app
-      - mysql
+      - dbdata:/var/lib/mysql
 
 volumes:
-  mysql-data:
+  dbdata:
