@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Permission;
@@ -19,7 +18,8 @@ class RolePermissionSeeder extends Seeder
     public function run()
     {
         $adminRole = Role::create(['name' => 'admin']);
-        $guestRole = Role::create(['name' => 'guest']);
+
+        Role::create(['name' => 'guest']);
 
         Permission::create(['name' => 'manage microsites']);
 
