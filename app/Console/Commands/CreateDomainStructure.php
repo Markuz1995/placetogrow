@@ -14,14 +14,15 @@ class CreateDomainStructure extends Command
     public function handle()
     {
         $name = Str::studly($this->argument('name'));
-        $basePath = app_path('Domains/' . $name);
+        $basePathDomain = app_path('Domains/' . $name);
 
         $directories = [
-            $basePath,
-            $basePath . '/Models',
-            $basePath . '/Repositories',
-            $basePath . '/Services',
+            $basePathDomain,
+            $basePathDomain . "/Models/{$name}.php",
+            $basePathDomain . "/Repositories/{$name}Repository.php",
+            $basePathDomain . "/Services/{$name}Service.php",
         ];
+
 
         foreach ($directories as $directory) {
             if (!File::isDirectory($directory)) {
