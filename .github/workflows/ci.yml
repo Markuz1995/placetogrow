@@ -34,5 +34,24 @@ jobs:
       - name: Run npm install
         run: npm install
 
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE laravel;' -uroot -proot
+
+      - name: Set up .env file
+        run: |
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=laravel" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
       - name: Run test
-        run: php artisan test
+        run: |
+          php artisan config:clear
+          php artisan test
