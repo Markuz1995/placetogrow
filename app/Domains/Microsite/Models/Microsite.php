@@ -11,7 +11,7 @@ class Microsite extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'logo', 'category_id', 'currency', 'payment_expiration', 'type'
+        'name', 'logo', 'category_id', 'currency', 'payment_expiration', 'type',
     ];
 
     public function category()

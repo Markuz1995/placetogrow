@@ -41,7 +41,7 @@ class MicrositeService
         $microsite = $this->getMicrositeById($id);
 
         if (isset($data['logo'])) {
-            if (!is_string($data['logo'])) {
+            if (! is_string($data['logo'])) {
                 $data = $this->saveLogo($data);
             }
         }
@@ -65,6 +65,7 @@ class MicrositeService
         $originalName = $data['logo']->getClientOriginalName();
         $data['logo']->storeAs('public/microsites', $originalName);
         $data['logo'] = "storage/microsites/{$originalName}";
+
         return $data;
     }
 

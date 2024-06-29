@@ -24,6 +24,7 @@ class MicrositeRequest extends FormRequest
     {
         $types = implode(',', array_column(Constants::MICROSITE_TYPES, 'id'));
         $currrency = implode(',', array_column(Constants::MICROSITE_CURRENCY, 'id'));
+
         return [
             'name' => 'required|string|max:255',
             'logo' => '',

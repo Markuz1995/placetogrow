@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Constants\Constants;
-use App\Domains\Category\Models\Category;
 use App\Domains\Category\Services\CategoryService;
 use App\Domains\Microsite\Services\MicrositeService;
 use App\Http\Requests\MicrositeRequest;
@@ -11,6 +10,7 @@ use App\Http\Requests\MicrositeRequest;
 class MicrositeController extends Controller
 {
     protected $micrositeService;
+
     protected $categoryService;
 
     public function __construct(MicrositeService $micrositeService, CategoryService $categoryService)
@@ -22,6 +22,7 @@ class MicrositeController extends Controller
     public function index()
     {
         $microsites = $this->micrositeService->getAllMicrosites();
+
         return inertia('Microsite/Index', [
             'microsites' => $microsites,
             'success' => session('success'),
@@ -37,7 +38,7 @@ class MicrositeController extends Controller
         return inertia('Microsite/Create', [
             'categories' => $categories,
             'types' => $types,
-            'currency' => $currency
+            'currency' => $currency,
         ]);
     }
 
@@ -45,12 +46,14 @@ class MicrositeController extends Controller
     {
         $validated = $request->validated();
         $microsite = $this->micrositeService->createMicrosite($validated);
+
         return to_route('microsite.index', $microsite)->with('success', 'Microsite was created');
     }
 
     public function show(int $id)
     {
         $microsite = $this->micrositeService->getMicrositeById($id);
+
         return view('microsites.show', compact('microsite'));
     }
 
@@ -65,7 +68,7 @@ class MicrositeController extends Controller
             'microsite' => $microsite,
             'categories' => $categories,
             'types' => $types,
-            'currency' => $currency
+            'currency' => $currency,
         ]);
     }
 
@@ -73,12 +76,14 @@ class MicrositeController extends Controller
     {
         $validated = $request->validated();
         $this->micrositeService->updateMicrosite($id, $validated);
+
         return to_route('microsite.index')->with('success', 'Microsite was updated');
     }
 
     public function destroy(int $id)
     {
         $this->micrositeService->deleteMicrosite($id);
+
         return to_route('microsite.index')->with('success', 'Microsite was deleted');
     }
 }

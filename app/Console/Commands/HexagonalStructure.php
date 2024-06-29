@@ -9,8 +9,8 @@ use Illuminate\Support\Str;
 class HexagonalStructure extends Command
 {
     protected $signature = 'make:hexagonal {name : The name of the module}';
-    protected $description = 'Create a new structure for the module';
 
+    protected $description = 'Create a new structure for the module';
 
     public function handle()
     {

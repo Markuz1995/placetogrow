@@ -27,12 +27,14 @@ class MicrositeRepositoryEloquent implements MicrositeRepository
     public function update(int $id, array $data): bool
     {
         $microsite = $this->find($id);
+
         return $microsite ? $microsite->update($data) : false;
     }
 
     public function delete(int $id): bool
     {
         $microsite = $this->find($id);
+
         return $microsite ? $microsite->delete() : false;
     }
 

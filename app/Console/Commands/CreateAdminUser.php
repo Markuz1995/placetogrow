@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 class CreateAdminUser extends Command
 {
     protected $signature = 'create:admin {email} {password}';
+
     protected $description = 'Create an admin user';
 
     public function __construct()
@@ -30,6 +31,6 @@ class CreateAdminUser extends Command
         $role = Role::firstOrCreate(['name' => 'admin']);
         $user->assignRole($role);
 
-        $this->info("Admin user created successfully");
+        $this->info('Admin user created successfully');
     }
 }

@@ -33,18 +33,21 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         $category = $this->categoryService->createCategory($validated);
+
         return to_route('category.index', $category)->with('success', 'Category was created');
     }
 
     public function show(int $id)
     {
         $category = $this->categoryService->getCategoryById($id);
+
         return view('categories.show', compact('category'));
     }
 
     public function edit(int $id)
     {
         $category = $this->categoryService->getCategoryById($id);
+
         return inertia('Category/Edit', ['category' => $category]);
     }
 
@@ -52,12 +55,14 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         $this->categoryService->updateCategory($id, $validated);
+
         return to_route('category.index')->with('success', 'Category was updated');
     }
 
     public function destroy(int $id)
     {
         $this->categoryService->deleteCategory($id);
+
         return to_route('category.index')->with('success', 'Category was deleted');
     }
 }
