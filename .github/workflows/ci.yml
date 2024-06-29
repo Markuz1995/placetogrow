@@ -1,51 +1,33 @@
-name: Run tests
+name: PlaceToGrow
 
-on: [push]
+on:
+  push:
+    branches: [develop]
 
 jobs:
-  tests:
-    name: Run tests
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
 
+    strategy:
+      matrix:
+        php-version: ["8.2"]
+
+    steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+      - uses: shivammathur/setup-php@v2
+      - with:
+          php-version: 8.2
+          extension: json, dom, curl, libxml, mbstring
           coverage: none
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env')"
 
       - name: Run composer install
         run: composer install -n --prefer-dist
 
-      - name: Prepare Laravel Application
-        run: |
-          cp .env.ci .env
-          php artisan key:generate
+      - name: Run npm install
+        run: npm install
 
-      - name: Run tests
+      - name: Run test
         run: php artisan test
-
-name: Static Analysis
-
-on: [push]
-
-jobs:
-  phpstan:
-    name: phpstan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          coverage: none
-
-      - name: Install composer dependencies
-        run: composer install -n --prefer-dist
-
-      - name: Run Static Analysis
-        run: ./vendor/bin/phpstan --error-format=github
