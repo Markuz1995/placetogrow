@@ -2,7 +2,7 @@ name: PlaceToGrow
 
 on:
   push:
-    branches: [develop]
+    branches: [feature/marco/actions]
 
 jobs:
   build:
