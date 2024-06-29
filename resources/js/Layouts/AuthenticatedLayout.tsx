@@ -25,9 +25,13 @@ export default function AuthenticatedLayout({ user, header, children }: PropsWit
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                <NavLink href={route('microsite.index')} active={route().current('microsite.index')}>
+                                    Microsite
+                                </NavLink>
                                 <NavLink href={route('category.index')} active={route().current('category.index')}>
                                     Category
                                 </NavLink>
+
                             </div>
                         </div>
 

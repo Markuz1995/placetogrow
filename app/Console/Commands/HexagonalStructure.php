@@ -8,29 +8,15 @@ use Illuminate\Support\Str;
 
 class HexagonalStructure extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'make:hexagonal {name : The name of the module}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Create a new structure for the module';
 
-    /**
-     * Execute the console command.
-     */
+
     public function handle()
     {
         $name = Str::studly($this->argument('name'));
         $basePathDomain = app_path('Domains/'.$name);
 
-        //Domain
         $directories = [
             $basePathDomain,
             "{$basePathDomain}/Models",
@@ -41,7 +27,6 @@ class HexagonalStructure extends Command
             "{$basePathDomain}/Services/{$name}Service.php",
         ];
 
-        //Infrastructure
         $basePathInfrastructure = app_path('Infrastructure/');
         $directories = array_merge($directories, [
             $basePathInfrastructure,
@@ -51,7 +36,6 @@ class HexagonalStructure extends Command
             "{$basePathInfrastructure}/Services",
         ]);
 
-        // Crear los directorios y archivos
         foreach ($directories as $path) {
             if (Str::endsWith($path, '.php')) {
                 if (! File::exists($path)) {

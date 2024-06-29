@@ -19,4 +19,6 @@ interface CategoryRepository
     public function delete(int $id): bool;
 
     public function paginate(int $perPage): LengthAwarePaginator;
+    public function getDataForSelect(): Collection;
+
 }

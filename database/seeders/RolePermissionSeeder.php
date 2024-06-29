@@ -14,7 +14,7 @@ class RolePermissionSeeder extends Seeder
      */
     use RefreshDatabase;
 
-    public function run()
+    public function run(): void
     {
         $adminRole = Role::create(['name' => 'admin']);
 

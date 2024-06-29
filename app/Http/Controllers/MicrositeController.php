@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Constants;
+use App\Domains\Category\Models\Category;
 use App\Domains\Category\Services\CategoryService;
 use App\Domains\Microsite\Services\MicrositeService;
-use Illuminate\Http\Request;
+use App\Http\Requests\MicrositeRequest;
 
 class MicrositeController extends Controller
 {
-    private $validateString = 'required|string|max:255';
     protected $micrositeService;
-
     protected $categoryService;
 
     public function __construct(MicrositeService $micrositeService, CategoryService $categoryService)
@@ -22,68 +22,63 @@ class MicrositeController extends Controller
     public function index()
     {
         $microsites = $this->micrositeService->getAllMicrosites();
-
-        return view('microsites.index', compact('microsites'));
+        return inertia('Microsite/Index', [
+            'microsites' => $microsites,
+            'success' => session('success'),
+        ]);
     }
 
     public function create()
     {
-        $categories = $this->categoryService->getAllCategories();
+        $categories = $this->categoryService->getDataForSelect();
+        $types = Constants::MICROSITE_TYPES;
+        $currency = Constants::MICROSITE_CURRENCY;
 
-        return view('microsites.create', compact('categories'));
+        return inertia('Microsite/Create', [
+            'categories' => $categories,
+            'types' => $types,
+            'currency' => $currency
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(MicrositeRequest $request)
     {
-        $request->validate([
-            'name' => $this->validateString,
-            'logo' => $this->validateString,
-            'category_id' => 'required|integer|exists:categories,id',
-            'currency' => 'required|string|max:3',
-            'expiration_time' => 'required|date_format:H:i:s',
-            'type' => 'required|string|in:invoice,subscription,donation',
-        ]);
-
-        $this->micrositeService->createMicrosite($request->all());
-
-        return redirect()->route('microsites.index');
+        $validated = $request->validated();
+        $microsite = $this->micrositeService->createMicrosite($validated);
+        return to_route('microsite.index', $microsite)->with('success', 'Microsite was created');
     }
 
     public function show(int $id)
     {
         $microsite = $this->micrositeService->getMicrositeById($id);
-
         return view('microsites.show', compact('microsite'));
     }
 
     public function edit(int $id)
     {
         $microsite = $this->micrositeService->getMicrositeById($id);
-        $categories = $this->categoryService->getAllCategories();
+        $categories = $this->categoryService->getDataForSelect();
+        $types = Constants::MICROSITE_TYPES;
+        $currency = Constants::MICROSITE_CURRENCY;
 
-        return view('microsites.edit', compact('microsite', 'categories'));
+        return inertia('Microsite/Edit', [
+            'microsite' => $microsite,
+            'categories' => $categories,
+            'types' => $types,
+            'currency' => $currency
+        ]);
     }
 
-    public function update(Request $request, int $id)
+    public function update(MicrositeRequest $request, int $id)
     {
-        $request->validate([
-            'name' => $this->validateString,
-            'logo' => $this->validateString,
-            'category_id' => 'required|integer|exists:categories,id',
-            'currency' => 'required|string|max:3',
-            'expiration_time' => 'required|date_format:H:i:s',
-            'type' => 'required|string|in:invoice,subscription,donation',
-        ]);
-
-        $this->micrositeService->updateMicrosite($id, $request->all());
-
-        return redirect()->route('microsites.index');
+        $validated = $request->validated();
+        $this->micrositeService->updateMicrosite($id, $validated);
+        return to_route('microsite.index')->with('success', 'Microsite was updated');
     }
 
     public function destroy(int $id)
     {
         $this->micrositeService->deleteMicrosite($id);
-
-        return redirect()->route('microsites.index');
+        return to_route('microsite.index')->with('success', 'Microsite was deleted');
     }
 }

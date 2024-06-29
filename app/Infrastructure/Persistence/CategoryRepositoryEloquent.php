@@ -42,4 +42,9 @@ class CategoryRepositoryEloquent implements CategoryRepository
     {
         return Category::paginate($perPage);
     }
+
+    public function getDataForSelect(): Collection
+    {
+        return Category::select('id', 'name')->get();
+    }
 }

@@ -40,4 +40,9 @@ class CategoryService
     {
         return $this->categoryRepository->delete($id);
     }
+
+    public function getDataForSelect()
+    {
+        return $this->categoryRepository->getDataForSelect();
+    }
 }

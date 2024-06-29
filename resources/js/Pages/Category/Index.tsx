@@ -45,8 +45,8 @@ export default function Index({ auth, categories, success }) {
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                                     <tr className="text-nowrap">
                                         <th className="px-3 py-2">ID</th>
-                                        <th className="px-3 py-2">NAME</th>
-                                        <th className="px-3 py-2">ACTIONS</th>
+                                        <th className="px-3 py-2">Name</th>
+                                        <th className="px-3 py-2">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
