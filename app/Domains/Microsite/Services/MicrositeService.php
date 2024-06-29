@@ -2,8 +2,8 @@
 
 namespace App\Domains\Microsite\Services;
 
-use App\Domains\Microsite\Repositories\MicrositeRepository;
 use App\Domains\Microsite\Models\Microsite;
+use App\Domains\Microsite\Repositories\MicrositeRepository;
 use Illuminate\Support\Collection;
 
 class MicrositeService

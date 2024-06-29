@@ -15,9 +15,8 @@ Route::get('/', function () {
     ]);
 });
 
-
-Route::middleware(['auth', 'verified'])->group(function() {
-    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
     Route::resource('category', CategoryController::class);
 });
 

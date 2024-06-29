@@ -3,10 +3,9 @@
 namespace App\Domains\Category\Services;
 
 use App\Constants\Constants;
-use App\Domains\Category\Repositories\CategoryRepository;
 use App\Domains\Category\Models\Category;
+use App\Domains\Category\Repositories\CategoryRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
-
 
 class CategoryService
 {

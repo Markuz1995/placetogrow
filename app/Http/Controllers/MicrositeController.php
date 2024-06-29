@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Microsite\Services\MicrositeService;
 use App\Domains\Category\Services\CategoryService;
+use App\Domains\Microsite\Services\MicrositeService;
 use Illuminate\Http\Request;
 
 class MicrositeController extends Controller
 {
     protected $micrositeService;
+
     protected $categoryService;
 
     public function __construct(MicrositeService $micrositeService, CategoryService $categoryService)
@@ -20,12 +21,14 @@ class MicrositeController extends Controller
     public function index()
     {
         $microsites = $this->micrositeService->getAllMicrosites();
+
         return view('microsites.index', compact('microsites'));
     }
 
     public function create()
     {
         $categories = $this->categoryService->getAllCategories();
+
         return view('microsites.create', compact('categories'));
     }
 
@@ -48,6 +51,7 @@ class MicrositeController extends Controller
     public function show(int $id)
     {
         $microsite = $this->micrositeService->getMicrositeById($id);
+
         return view('microsites.show', compact('microsite'));
     }
 
@@ -55,6 +59,7 @@ class MicrositeController extends Controller
     {
         $microsite = $this->micrositeService->getMicrositeById($id);
         $categories = $this->categoryService->getAllCategories();
+
         return view('microsites.edit', compact('microsite', 'categories'));
     }
 
@@ -77,6 +82,7 @@ class MicrositeController extends Controller
     public function destroy(int $id)
     {
         $this->micrositeService->deleteMicrosite($id);
+
         return redirect()->route('microsites.index');
     }
 }

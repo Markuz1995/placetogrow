@@ -3,6 +3,5 @@ parameters:
     paths:
         - app
         - database
-        - tests
 
     checkMissingIterableValueType: false

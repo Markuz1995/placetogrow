@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class HexagonalStructure extends Command
 {
@@ -28,7 +28,7 @@ class HexagonalStructure extends Command
     public function handle()
     {
         $name = Str::studly($this->argument('name'));
-        $basePathDomain = app_path('Domains/' . $name);
+        $basePathDomain = app_path('Domains/'.$name);
 
         //Domain
         $directories = [
@@ -54,14 +54,14 @@ class HexagonalStructure extends Command
         // Crear los directorios y archivos
         foreach ($directories as $path) {
             if (Str::endsWith($path, '.php')) {
-                if (!File::exists($path)) {
-                    File::put($path, "<?php\n\nnamespace " . str_replace('/', '\\', str_replace(app_path(), 'App', dirname($path))) . ";\n\n");
+                if (! File::exists($path)) {
+                    File::put($path, "<?php\n\nnamespace ".str_replace('/', '\\', str_replace(app_path(), 'App', dirname($path))).";\n\n");
                     $this->info("Created file: $path");
                 } else {
                     $this->warn("File already exists: $path");
                 }
             } else {
-                if (!File::isDirectory($path)) {
+                if (! File::isDirectory($path)) {
                     File::makeDirectory($path, 0755, true);
                     $this->info("Created directory: $path");
                 } else {

@@ -74,14 +74,6 @@ export default function Index({ auth, categories, success }) {
                             </table>
                             <div className="mt-4">
                                 <Pagination links={categories.links} />
-                                {/* {categories.links.map((link, index) => (
-                                    <a
-                                        key={index}
-                                        href={link.url}
-                                        className={`px-3 py-1 mx-1 rounded ${link.active ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                    ></a>
-                                ))} */}
                             </div>
                         </div>
                     </div>

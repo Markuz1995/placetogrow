@@ -12,7 +12,6 @@ class RolePermissionSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-
     use RefreshDatabase;
 
     public function run()

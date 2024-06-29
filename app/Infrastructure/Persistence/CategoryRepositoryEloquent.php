@@ -27,12 +27,14 @@ class CategoryRepositoryEloquent implements CategoryRepository
     public function update(int $id, array $data): bool
     {
         $category = $this->find($id);
+
         return $category->update($data);
     }
 
     public function delete(int $id): bool
     {
         $category = $this->find($id);
+
         return $category ? $category->delete() : false;
     }
 
