@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class MicrositeController extends Controller
 {
+    private $validateString = 'required|string|max:255';
     protected $micrositeService;
 
     protected $categoryService;
@@ -35,8 +36,8 @@ class MicrositeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
+            'name' => $this->validateString,
+            'logo' => $this->validateString,
             'category_id' => 'required|integer|exists:categories,id',
             'currency' => 'required|string|max:3',
             'expiration_time' => 'required|date_format:H:i:s',
@@ -66,8 +67,8 @@ class MicrositeController extends Controller
     public function update(Request $request, int $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
+            'name' => $this->validateString,
+            'logo' => $this->validateString,
             'category_id' => 'required|integer|exists:categories,id',
             'currency' => 'required|string|max:3',
             'expiration_time' => 'required|date_format:H:i:s',
