@@ -23,9 +23,9 @@ class MicrositeFactory extends Factory
             'name' => $this->faker->company,
             'logo' => $this->faker->imageUrl(640, 480, 'business', true),
             'category_id' => $category->id,
-            'currency' => Constants::MICROSITE_CURRENCY[0],
-            'payment_expiration' => $this->faker->dateTimeBetween('+1 month', '+1 year'),
-            'type' => $this->faker->randomElement(['invoice', 'subscription', 'donation']),
+            'currency' => $this->faker->randomElement(Constants::MICROSITE_CURRENCY),
+            'payment_expiration' => $this->faker->numberBetween(1, 30),
+            'type' => $this->faker->randomElement(Constants::MICROSITE_TYPES),
         ];
     }
 }
