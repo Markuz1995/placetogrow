@@ -13,6 +13,8 @@ jobs:
         php-version: ["8.2"]
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -23,19 +25,17 @@ jobs:
       - name: Check PHP
         run: php -v
 
-      - uses: actions/checkout@v2
-
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Generate application key
         run: php artisan key:generate --force
 
       - name: Show application key
         run: grep APP_KEY .env
-
-      - name: Run composer install
-        run: composer install -n --prefer-dist
 
       - name: Run npm install
         run: npm install
@@ -60,5 +60,5 @@ jobs:
       - name: Run migrations
         run: php artisan migrate --force
 
-      # - name: Run tests
-      #   run: php artisan test
+      - name: Run tests
+        run: php artisan test
