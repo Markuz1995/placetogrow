@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MicrositeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,9 +18,11 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
-    Route::resource('category', CategoryController::class);
-    Route::resource('microsite', MicrositeController::class);
+    Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
+    Route::middleware([AdminMiddleware::class])->group(function () {
+        Route::resource('category', CategoryController::class);
+        Route::resource('microsite', MicrositeController::class);
+    });
 });
 
 Route::middleware('auth')->group(function () {
@@ -28,4 +31,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
