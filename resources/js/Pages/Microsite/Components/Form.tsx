@@ -4,7 +4,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
 import { Link } from "@inertiajs/react";
-import { MicrositeFormProps, Option } from '@/types/microsite';
+import { MicrositeFormProps } from '@/types/microsite';
 
 const transformOptions = (options: string[]) => {
     return options.map((option) => ({
