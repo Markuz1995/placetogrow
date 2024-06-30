@@ -1,0 +1,64 @@
+name: PlaceToGrow
+
+on:
+  push:
+    branches: [feature/marco/actions]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: ["8.2"]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extension: json, dom, curl, libxml, mbstring
+          coverage: none
+
+      - name: Check PHP
+        run: php -v
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Generate application key
+        run: php artisan key:generate --force
+
+      - name: Show application key
+        run: grep APP_KEY .env
+
+      - name: Run npm install
+        run: npm install
+
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE laravel;' -uroot -proot
+
+      - name: Set up .env file
+        run: |
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=laravel" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+
+      - name: Clear config cache
+        run: php artisan config:clear
+
+      - name: Run migrations
+        run: php artisan migrate --force
+
+      # - name: Run tests
+      #   run: php artisan test

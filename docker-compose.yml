@@ -16,6 +16,9 @@ services:
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: password
+    command: ["/usr/local/bin/wait-db.sh", "db", "php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+    networks:
+      - laravel-network
 
   db:
     image: mysql:8.0
@@ -27,6 +30,12 @@ services:
       MYSQL_ROOT_PASSWORD: password
     volumes:
       - dbdata:/var/lib/mysql
+    networks:
+      - laravel-network
 
 volumes:
   dbdata:
+
+networks:
+  laravel-network:
+    driver: bridge
