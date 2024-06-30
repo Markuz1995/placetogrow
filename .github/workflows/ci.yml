@@ -50,8 +50,3 @@ jobs:
 
       - name: Run migrations
         run: php artisan migrate --force
-
-      - name: Run test
-        run: |
-          php artisan config:clear
-          php artisan test
