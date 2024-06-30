@@ -28,6 +28,12 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
+      - name: Generate application key
+        run: php artisan key:generate --force
+
+      - name: Show application key
+        run: grep APP_KEY .env
+
       - name: Run composer install
         run: composer install -n --prefer-dist
 
@@ -48,5 +54,11 @@ jobs:
           echo "DB_USERNAME=root" >> .env
           echo "DB_PASSWORD=root" >> .env
 
+      - name: Clear config cache
+        run: php artisan config:clear
+
       - name: Run migrations
         run: php artisan migrate --force
+
+      # - name: Run tests
+      #   run: php artisan test

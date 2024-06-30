@@ -9,11 +9,11 @@ class Constants
     const MICROSITE_TYPES = [
         'invoice',
         'subscription',
-        'donation'
+        'donation',
     ];
 
     const MICROSITE_CURRENCY = [
         'COP',
-        'USD'
+        'USD',
     ];
 }
