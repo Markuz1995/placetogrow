@@ -1,16 +1,17 @@
 import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { IndexProps, Microsite } from "@/types/microsite";
 import { Button } from "@headlessui/react";
 import { Head, Link, router } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function Index({ auth, microsites, success }) {
+export default function Index({ auth, microsites, success }: Readonly<IndexProps>) {
 
     const [showSuccessMessage, setShowSuccessMessage] = useState(!!success);
-    const [modalImage, setModalImage] = useState(null);
+    const [modalImage, setModalImage] = useState<string | null>(null);
 
 
-    const deleteMicrosite = (microsite) => {
+    const deleteMicrosite = (microsite: Microsite) => {
         if (!window.confirm('Are you sure you want to delete the microsite?')) {
             return false;
         }
@@ -18,8 +19,18 @@ export default function Index({ auth, microsites, success }) {
         router.delete(route('microsite.destroy', microsite.id));
     };
 
-    const openModal = (imageUrl) => {
-        setModalImage(imageUrl);
+    const openModal = (imageUrl: string | File) => {
+        if (typeof imageUrl === 'string') {
+            setModalImage(imageUrl);
+        } else {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (e.target && typeof e.target.result === 'string') {
+                    setModalImage(e.target.result);
+                }
+            };
+            reader.readAsDataURL(imageUrl);
+        }
     };
 
     const closeModal = () => {
@@ -73,11 +84,15 @@ export default function Index({ auth, microsites, success }) {
                                             <td className="px-3 py-2">
                                                 {microsite.logo && (
                                                     <button onClick={() => openModal(microsite.logo)} className="bg-transparent border-none">
-                                                        <img src={microsite.logo} alt="Logo" className="w-8 h-8 cursor-pointer" />
+                                                        {typeof microsite.logo === 'string' ? (
+                                                            <img src={microsite.logo} alt="Logo" className="w-8 h-8 cursor-pointer" />
+                                                        ) : (
+                                                            <span>No Logo</span>
+                                                        )}
                                                     </button>
                                                 )}
                                             </td>
-                                            <td className="px-3 py-2">{microsite.category.name}</td>
+                                            <td className="px-3 py-2">{microsite.category?.name}</td>
                                             <td className="px-3 py-2">{microsite.currency}</td>
                                             <td className="px-3 py-2">{microsite.payment_expiration}</td>
                                             <td className="px-3 py-2">{microsite.type}</td>

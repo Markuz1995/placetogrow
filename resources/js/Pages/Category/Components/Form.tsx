@@ -4,7 +4,7 @@ import TextInput from "@/Components/TextInput";
 import { CategoryFormProps } from "@/types/category";
 import { Link } from "@inertiajs/react";
 
-export default function CategoryForm({ data, setData, errors, onSubmit, isEditing }: CategoryFormProps) {
+export default function CategoryForm({ data, setData, errors, onSubmit, isEditing }: Readonly<CategoryFormProps>) {
     return (
         <form onSubmit={onSubmit} className="p-4 sm:p-8 shadow sm:rounded-lg">
             <div>

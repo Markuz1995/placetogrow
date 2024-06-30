@@ -1,18 +1,19 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 import Form from "./Components/Form";
+import { CreateProps } from "@/types/microsite";
 
-export default function Create({ auth, categories, types, currency }) {
+export default function Create({ auth, categories, types, currency }: Readonly<CreateProps>) {
     const { data, setData, post, errors } = useForm({
         name: "",
-        category_id: "",
+        category_id: 0,
         currency: "",
-        payment_expiration: "",
+        payment_expiration: 0,
         type: "",
         logo: null,
     });
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         post(route("microsite.store"));
     };

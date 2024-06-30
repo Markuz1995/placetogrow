@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, SelectHTMLAttributes } from 'react';
 
 interface Option {
-    id: number;
+    id: string;
     name: string;
 }
 
@@ -11,7 +11,7 @@ interface SelectInputProps extends SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export default forwardRef(function SelectInput(
-    { className = '', options = [], defaultOptionText = 'Select an option',...props }: SelectInputProps,
+    { className = '', options = [], defaultOptionText = 'Select an option', ...props }: SelectInputProps,
     ref
 ) {
     const localRef = useRef<HTMLSelectElement>(null);

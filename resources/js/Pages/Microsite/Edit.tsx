@@ -1,20 +1,21 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 import Form from "./Components/Form";
+import { EditProps } from "@/types/microsite";
 
-export default function Edit({ auth, microsite, categories, types, currency }) {
+export default function Edit({ auth, microsite, categories, types, currency }: Readonly<EditProps>) {
 
     const { data, setData, post, errors } = useForm({
         name: microsite.name || "",
-        category_id: microsite.category_id || "",
+        category_id: microsite.category_id || 0,
         currency: microsite.currency || "",
-        payment_expiration: microsite.payment_expiration || "",
+        payment_expiration: microsite.payment_expiration || 0,
         type: microsite.type || "",
         logo: microsite.logo ?? null,
         _method: "PUT",
     });
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         post(route("microsite.update", microsite.id));
     };

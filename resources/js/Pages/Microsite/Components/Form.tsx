@@ -7,7 +7,7 @@ import { Link } from "@inertiajs/react";
 import { MicrositeFormProps, Option } from '@/types/microsite';
 
 const transformOptions = (options: string[]) => {
-    return options.map((option, index) => ({
+    return options.map((option) => ({
         id: option,
         name: option
     }));
@@ -22,7 +22,7 @@ export default function MicrositeForm({
     categories,
     types,
     currency
-}: MicrositeFormProps) {
+}: Readonly<MicrositeFormProps>) {
 
     let logoUrl: string | null = null;
 
@@ -45,8 +45,7 @@ export default function MicrositeForm({
 
     const transformedTypes = transformOptions(types);
     const transformedCurrencies = transformOptions(currency);
-    console.log(transformedTypes)
-    console.log(transformedCurrencies)
+
     return (
         <form onSubmit={onSubmit} className="p-4 sm:p-8 shadow sm:rounded-lg" encType="multipart/form-data">
             <div className="mb-4">
@@ -77,7 +76,7 @@ export default function MicrositeForm({
                     className="mt-1 block w-full"
                     onChange={(e) => setData("logo", e.target.files![0])}
                 />
-                <InputError message={errors.logo} className="mt-2" />
+                <InputError message={errors.logo + ''} className="mt-2" />
             </div>
 
             <div className="mt-4">
