@@ -22,8 +22,8 @@ class MicrositeRequest extends FormRequest
      */
     public function rules(): array
     {
-        $types = implode(',', array_column(Constants::MICROSITE_TYPES, 'id'));
-        $currrency = implode(',', array_column(Constants::MICROSITE_CURRENCY, 'id'));
+        $types = implode(',', Constants::MICROSITE_TYPES);
+        $currrency = implode(',', Constants::MICROSITE_CURRENCY);
 
         return [
             'name' => 'required|string|max:255',

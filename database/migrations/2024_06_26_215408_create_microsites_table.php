@@ -6,8 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,7 +17,7 @@ return new class extends Migration
             $table->string('name', 50)->unique();
             $table->string('logo');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->string('currency');
+            $table->enum('currency', Constants::MICROSITE_CURRENCY);
             $table->integer('payment_expiration');
             $table->timestamp('enabled_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->enum('type', Constants::MICROSITE_TYPES);

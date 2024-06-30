@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
 import { Link } from "@inertiajs/react";
+
+const transformOptions = (options) => {
+    return options.map(option => ({ id: option, name: option }));
+};
 
 export default function MicrositeForm({ data, setData, errors, onSubmit, isEditing, categories, types, currency }) {
     let logoUrl = null;
@@ -24,6 +28,11 @@ export default function MicrositeForm({ data, setData, errors, onSubmit, isEditi
             logoUrl = URL.createObjectURL(data.logo);
         }
     }
+
+    const transformedTypes = transformOptions(types);
+    const transformedCurrencies = transformOptions(currency);
+    console.log(transformedTypes);
+    console.log(transformedCurrencies);
 
     return (
         <form onSubmit={onSubmit} className="p-4 sm:p-8 shadow sm:rounded-lg" encType="multipart/form-data">
@@ -79,7 +88,7 @@ export default function MicrositeForm({ data, setData, errors, onSubmit, isEditi
                     value={data.currency}
                     className="mt-1 block w-full"
                     onChange={(e) => setData("currency", e.target.value)}
-                    options={currency}
+                    options={transformedCurrencies}
                 />
                 <InputError message={errors.currency} className="mt-2" />
             </div>
@@ -105,7 +114,7 @@ export default function MicrositeForm({ data, setData, errors, onSubmit, isEditi
                     value={data.type}
                     className="mt-1 block w-full"
                     onChange={(e) => setData("type", e.target.value)}
-                    options={types}
+                    options={transformedTypes}
                 />
                 <InputError message={errors.type} className="mt-2" />
             </div>
