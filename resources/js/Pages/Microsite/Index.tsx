@@ -98,6 +98,12 @@ export default function Index({ auth, microsites, success }: Readonly<IndexProps
                                             <td className="px-3 py-2">{microsite.type}</td>
                                             <td className="px-3 py-2">
                                                 <Link
+                                                    href={route('microsite.show', microsite.id)}
+                                                    className="font-medium text-green-600 dark:text-green-500 hover:underline mx-1"
+                                                >
+                                                    View
+                                                </Link>
+                                                <Link
                                                     href={route('microsite.edit', microsite.id)}
                                                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                                                 >

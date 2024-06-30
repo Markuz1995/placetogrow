@@ -41,7 +41,7 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->getCategoryById($id);
 
-        return view('categories.show', compact('category'));
+        return inertia('Category/Show', ['category' => $category]);
     }
 
     public function edit(int $id)

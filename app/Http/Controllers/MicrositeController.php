@@ -54,7 +54,7 @@ class MicrositeController extends Controller
     {
         $microsite = $this->micrositeService->getMicrositeById($id);
 
-        return view('microsites.show', compact('microsite'));
+        return inertia('Microsite/Show', ['microsite' => $microsite]);
     }
 
     public function edit(int $id)

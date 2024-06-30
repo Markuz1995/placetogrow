@@ -1,16 +1,16 @@
 import { PageProps } from '@/types';
 
 interface Category {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
 }
 
 interface IndexProps extends PageProps {
-  categories: {
-    data: Category[];
-    links: any[];
-  };
-  success?: string;
+    categories: {
+        data: Category[];
+        links: any[];
+    };
+    success?: string;
 }
 
 interface CategoryFormData {
@@ -27,7 +27,6 @@ interface CategoryFormProps {
     isEditing: boolean;
 }
 
-
 interface Auth {
     user: {
         id: number;
@@ -36,7 +35,10 @@ interface Auth {
     };
 }
 
-
 interface EditProps extends PageProps {
+    category: Category;
+}
+
+export interface ShowProps extends PageProps {
     category: Category;
 }

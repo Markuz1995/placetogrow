@@ -57,6 +57,12 @@ export default function Index({ auth, categories, success }: Readonly<IndexProps
                                             <td className="px-3 py-2">{category.name}</td>
                                             <td className="px-3 py-2">
                                                 <Link
+                                                    href={route('category.show', category.id)}
+                                                    className="font-medium text-green-600 dark:text-green-500 hover:underline mx-1"
+                                                >
+                                                    View
+                                                </Link>
+                                                <Link
                                                     href={route('category.edit', category.id)}
                                                     className="font-medium text-blue-600 dark:test-blue-500 hover:underline mx-1"
                                                 >

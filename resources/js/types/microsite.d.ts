@@ -77,3 +77,7 @@ export interface EditProps extends PageProps {
     types: string[];
     currency: string[];
 }
+
+export interface ShowProps extends PageProps {
+    microsite: Microsite;
+}
