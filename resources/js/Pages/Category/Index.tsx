@@ -5,7 +5,7 @@ import { Button } from "@headlessui/react";
 import { Head, Link, router } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function Index({ auth, categories, success }: IndexProps) {
+export default function Index({ auth, categories, success }: Readonly<IndexProps>) {
 
     const [showSuccessMessage, setShowSuccessMessage] = useState(!!success);
 

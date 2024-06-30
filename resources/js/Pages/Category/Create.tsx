@@ -3,7 +3,7 @@ import { Head, useForm } from "@inertiajs/react";
 import Form from "./Components/Form";
 import { IndexProps } from "@/types/category";
 
-export default function Create({ auth }: IndexProps) {
+export default function Create({ auth }: Readonly<IndexProps>) {
     const { data, setData, post, errors } = useForm({
         name: "",
     });
