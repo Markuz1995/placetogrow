@@ -16,8 +16,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $name = $this->faker->unique()->company();
+        $name = substr($name, 0, 30);
+
         return [
-            'name' => $this->faker->unique()->company(),
+            'name' => $name,
             'enabled_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }

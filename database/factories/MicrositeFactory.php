@@ -18,9 +18,11 @@ class MicrositeFactory extends Factory
     public function definition(): array
     {
         $category = CategoryFactory::new()->create();
+        $name = $this->faker->unique()->company();
+        $name = substr($name, 0, 30);
 
         return [
-            'name' => $this->faker->unique()->company,
+            'name' => $name,
             'logo' => $this->faker->imageUrl(640, 480, 'business', true),
             'category_id' => $category->id,
             'currency' => $this->faker->randomElement(Constants::MICROSITE_CURRENCY),
