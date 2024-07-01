@@ -46,6 +46,9 @@ jobs:
       - name: Run tests with phpunit/phpunit
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
+      - name: Secret
+        run: echo ${{ secrets.SONAR_TOKEN }}
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
