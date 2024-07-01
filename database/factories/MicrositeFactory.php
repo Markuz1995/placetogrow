@@ -20,7 +20,7 @@ class MicrositeFactory extends Factory
         $category = CategoryFactory::new()->create();
 
         return [
-            'name' => $this->faker->company,
+            'name' => $this->faker->unique()->company,
             'logo' => $this->faker->imageUrl(640, 480, 'business', true),
             'category_id' => $category->id,
             'currency' => $this->faker->randomElement(Constants::MICROSITE_CURRENCY),
