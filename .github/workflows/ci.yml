@@ -58,7 +58,9 @@ jobs:
         run: php artisan config:clear
 
       - name: Run migrations
-        run: php artisan migrate --force
+        run: |
+          php artisan migrate --force
+          php artisan migrate:status
 
       - name: Run tests with phpunit/phpunit
         run: vendor/bin/phpunit --configuration=phpunit.xml --coverage-clover=coverage.xml
