@@ -18,14 +18,16 @@ class MicrositeFactory extends Factory
     public function definition(): array
     {
         $category = CategoryFactory::new()->create();
+        $name = $this->faker->unique()->company();
+        $name = substr($name, 0, 30);
 
         return [
-            'name' => $this->faker->company,
+            'name' => $name,
             'logo' => $this->faker->imageUrl(640, 480, 'business', true),
             'category_id' => $category->id,
-            'currency' => Constants::MICROSITE_CURRENCY[0],
-            'payment_expiration' => $this->faker->dateTimeBetween('+1 month', '+1 year'),
-            'type' => $this->faker->randomElement(['invoice', 'subscription', 'donation']),
+            'currency' => $this->faker->randomElement(Constants::MICROSITE_CURRENCY),
+            'payment_expiration' => $this->faker->numberBetween(1, 30),
+            'type' => $this->faker->randomElement(Constants::MICROSITE_TYPES),
         ];
     }
 }

@@ -12,11 +12,6 @@ class CreateGuestUser extends Command
 
     protected $description = 'Create a guest user';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle()
     {
         $email = $this->argument('email');
