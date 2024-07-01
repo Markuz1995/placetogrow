@@ -19,7 +19,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
-          extension: json, dom, curl, libxml, mbstring
+          extension: json, dom, curl, libxml, mbstring, pdo_mysql
           coverage: xdebug
 
       - name: Check PHP
@@ -43,14 +43,14 @@ jobs:
       - name: Set up MySQL
         run: |
           sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE laravel;' -uroot -proot
+          mysql -e 'CREATE DATABASE laravel_testing;' -uroot -proot
 
       - name: Set up .env file
         run: |
           echo "DB_CONNECTION=mysql" >> .env
           echo "DB_HOST=127.0.0.1" >> .env
           echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=laravel" >> .env
+          echo "DB_DATABASE=laravel_testing" >> .env
           echo "DB_USERNAME=root" >> .env
           echo "DB_PASSWORD=root" >> .env
 
@@ -61,7 +61,7 @@ jobs:
         run: php artisan migrate --force
 
       - name: Run tests with phpunit/phpunit
-        run: vendor/bin/phpunit --coverage-clover=coverage.xml
+        run: vendor/bin/phpunit --configuration=phpunit.xml --coverage-clover=coverage.xml
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
