@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f518c4d47f7794eea7b380d0550acd1",
+    "content-hash": "88f65f542fbd07c79e23472e5d3ff433",
     "packages": [
         {
             "name": "brick/math",
@@ -1047,22 +1047,23 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v1.0.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "fcf3d6db1a259a55d8d18cf43fc971202c1f6b0d"
+                "reference": "36730d13b1dab9017069004fd458b3e67449a326"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/fcf3d6db1a259a55d8d18cf43fc971202c1f6b0d",
-                "reference": "fcf3d6db1a259a55d8d18cf43fc971202c1f6b0d",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/36730d13b1dab9017069004fd458b3e67449a326",
+                "reference": "36730d13b1dab9017069004fd458b3e67449a326",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "laravel/framework": "^8.74|^9.0|^10.0|^11.0",
-                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0"
+                "php": "^7.3|~8.0.0|~8.1.0|~8.2.0|~8.3.0",
+                "symfony/console": "^5.3|^6.0|^7.0"
             },
             "require-dev": {
                 "mockery/mockery": "^1.3.3",
@@ -1110,7 +1111,7 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.0.0"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v1.3.0"
             },
             "funding": [
                 {
@@ -1118,7 +1119,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-09T00:30:58+00:00"
+            "time": "2024-06-13T01:25:09+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1381,6 +1382,70 @@
                 "source": "https://github.com/laravel/prompts/tree/v0.1.19"
             },
             "time": "2024-04-16T14:20:35+00:00"
+        },
+        {
+            "name": "laravel/sanctum",
+            "version": "v4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/sanctum.git",
+                "reference": "9cfc0ce80cabad5334efff73ec856339e8ec1ac1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/sanctum/zipball/9cfc0ce80cabad5334efff73ec856339e8ec1ac1",
+                "reference": "9cfc0ce80cabad5334efff73ec856339e8ec1ac1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/console": "^11.0",
+                "illuminate/contracts": "^11.0",
+                "illuminate/database": "^11.0",
+                "illuminate/support": "^11.0",
+                "php": "^8.2",
+                "symfony/console": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^9.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Sanctum\\SanctumServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Sanctum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Sanctum provides a featherweight authentication system for SPAs and simple APIs.",
+            "keywords": [
+                "auth",
+                "laravel",
+                "sanctum"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/sanctum/issues",
+                "source": "https://github.com/laravel/sanctum"
+            },
+            "time": "2024-04-10T19:39:58+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3192,6 +3257,88 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "spatie/laravel-permission",
+            "version": "6.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "fe973a58b44380d0e8620107259b7bda22f70408"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/fe973a58b44380d0e8620107259b7bda22f70408",
+                "reference": "fe973a58b44380d0e8620107259b7bda22f70408",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/container": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/contracts": "^8.12|^9.0|^10.0|^11.0",
+                "illuminate/database": "^8.12|^9.0|^10.0|^11.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/passport": "^11.0|^12.0",
+                "orchestra/testbench": "^6.23|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.4|^10.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "6.x-dev",
+                    "dev-master": "6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Permission\\PermissionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Permission handling for Laravel 8.0 and up",
+            "homepage": "https://github.com/spatie/laravel-permission",
+            "keywords": [
+                "acl",
+                "laravel",
+                "permission",
+                "permissions",
+                "rbac",
+                "roles",
+                "security",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-permission/issues",
+                "source": "https://github.com/spatie/laravel-permission/tree/6.9.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-06-22T23:04:52+00:00"
         },
         {
             "name": "symfony/clock",
@@ -5491,6 +5638,75 @@
             "time": "2024-03-19T11:57:22+00:00"
         },
         {
+            "name": "tightenco/ziggy",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tighten/ziggy.git",
+                "reference": "c0ee79a5bb92077e4b72d1d732c823ccba7f6a15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tighten/ziggy/zipball/c0ee79a5bb92077e4b72d1d732c823ccba7f6a15",
+                "reference": "c0ee79a5bb92077e4b72d1d732c823ccba7f6a15",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": ">=9.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "laravel/folio": "^1.1",
+                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0",
+                "phpunit/phpunit": "^9.5 || ^10.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tighten\\Ziggy\\ZiggyServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tighten\\Ziggy\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Coulbourne",
+                    "email": "daniel@tighten.co"
+                },
+                {
+                    "name": "Jake Bathman",
+                    "email": "jake@tighten.co"
+                },
+                {
+                    "name": "Jacob Baker-Kretzmar",
+                    "email": "jacob@tighten.co"
+                }
+            ],
+            "description": "Use your Laravel named routes in JavaScript.",
+            "homepage": "https://github.com/tighten/ziggy",
+            "keywords": [
+                "Ziggy",
+                "javascript",
+                "laravel",
+                "routes"
+            ],
+            "support": {
+                "issues": "https://github.com/tighten/ziggy/issues",
+                "source": "https://github.com/tighten/ziggy/tree/v2.2.1"
+            },
+            "time": "2024-05-16T23:31:31+00:00"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "v2.2.7",
             "source": {
@@ -5947,17 +6163,77 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
-            "name": "laravel/pint",
-            "version": "v1.15.1",
+            "name": "laravel/breeze",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel/pint.git",
-                "reference": "5f288b5e79938cc72f5c298d384e639de87507c6"
+                "url": "https://github.com/laravel/breeze.git",
+                "reference": "438424c11583576bbf3897dda505d2565e53c9bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/5f288b5e79938cc72f5c298d384e639de87507c6",
-                "reference": "5f288b5e79938cc72f5c298d384e639de87507c6",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/438424c11583576bbf3897dda505d2565e53c9bd",
+                "reference": "438424c11583576bbf3897dda505d2565e53c9bd",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^11.0",
+                "illuminate/filesystem": "^11.0",
+                "illuminate/support": "^11.0",
+                "illuminate/validation": "^11.0",
+                "php": "^8.2.0",
+                "symfony/console": "^7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0",
+                "phpstan/phpstan": "^1.10"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Breeze\\BreezeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Breeze\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Minimal Laravel authentication scaffolding with Blade and Tailwind.",
+            "keywords": [
+                "auth",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/breeze/issues",
+                "source": "https://github.com/laravel/breeze"
+            },
+            "time": "2024-06-06T14:18:45+00:00"
+        },
+        {
+            "name": "laravel/pint",
+            "version": "v1.16.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pint.git",
+                "reference": "9266a47f1b9231b83e0cfd849009547329d871b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/9266a47f1b9231b83e0cfd849009547329d871b1",
+                "reference": "9266a47f1b9231b83e0cfd849009547329d871b1",
                 "shasum": ""
             },
             "require": {
@@ -5968,13 +6244,13 @@
                 "php": "^8.1.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.52.1",
-                "illuminate/view": "^10.48.4",
-                "larastan/larastan": "^2.9.2",
-                "laravel-zero/framework": "^10.3.0",
-                "mockery/mockery": "^1.6.11",
+                "friendsofphp/php-cs-fixer": "^3.59.3",
+                "illuminate/view": "^10.48.12",
+                "larastan/larastan": "^2.9.7",
+                "laravel-zero/framework": "^10.4.0",
+                "mockery/mockery": "^1.6.12",
                 "nunomaduro/termwind": "^1.15.1",
-                "pestphp/pest": "^2.34.5"
+                "pestphp/pest": "^2.34.8"
             },
             "bin": [
                 "builds/pint"
@@ -6010,7 +6286,7 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
-            "time": "2024-04-02T14:28:47+00:00"
+            "time": "2024-06-18T16:50:05+00:00"
         },
         {
             "name": "laravel/sail",
@@ -6431,6 +6707,64 @@
                 "source": "https://github.com/phar-io/version/tree/3.2.1"
             },
             "time": "2022-02-21T01:04:05+00:00"
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "1.11.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "490f0ae1c92b082f154681d7849aee776a7c1443"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/490f0ae1c92b082f154681d7849aee776a7c1443",
+                "reference": "490f0ae1c92b082f154681d7849aee776a7c1443",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-06-17T15:10:54+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
