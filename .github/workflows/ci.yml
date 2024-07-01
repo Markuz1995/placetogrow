@@ -1,69 +1,50 @@
-name: PlaceToGrow
+name: Laravel Tests
 
 on:
   pull_request:
     branches: [develop]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        php-version: ["8.2"]
+    services:
+      mysql:
+        image: mysql-latest
+        env:
+          MYSQL_ROOT_PASSWORD: laravel_password
+          MYSQL_DATABASE: laravel
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Setup PHP
+      - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
-          extension: json, dom, curl, libxml, mbstring, pdo_mysql
+          php-version: '8.2'
           coverage: xdebug
 
-      - name: Check PHP
-        run: php -v
-
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
-      - name: Install Composer dependencies
+      - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      - name: Copy .env
+        run: cp .env.example .env
+
       - name: Generate application key
-        run: php artisan key:generate --force
-
-      - name: Show application key
-        run: grep APP_KEY .env
-
-      - name: Run npm install
-        run: npm install
-
-      - name: Set up MySQL
-        run: |
-          sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE laravel_testing;' -uroot -proot
-
-      - name: Set up .env file
-        run: |
-          echo "DB_CONNECTION=mysql" >> .env
-          echo "DB_HOST=127.0.0.1" >> .env
-          echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=laravel_testing" >> .env
-          echo "DB_USERNAME=root" >> .env
-          echo "DB_PASSWORD=root" >> .env
-
-      - name: Clear config cache
-        run: php artisan config:clear
+        run: php artisan key:generate
 
       - name: Run migrations
-        run: |
-          php artisan migrate --force
-          php artisan migrate:status
+        run: php artisan migrate --force
+
+      - name: Run tests
+        run: vendor/bin/phpunit
 
       - name: Run tests with phpunit/phpunit
-        run: vendor/bin/phpunit --configuration=phpunit.xml --coverage-clover=coverage.xml
+          run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
