@@ -28,16 +28,6 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-      - name: Use SQLite for testing
-        run: |
-          cp .env .env.testing
-          sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/' .env.testing
-          sed -i 's/DB_HOST=127.0.0.1/# DB_HOST=127.0.0.1/' .env.testing
-          sed -i 's/DB_PORT=3306/# DB_PORT=3306/' .env.testing
-          sed -i 's/DB_DATABASE=laravel/# DB_DATABASE=laravel/' .env.testing
-          sed -i 's/DB_USERNAME=root/# DB_USERNAME=root/' .env.testing
-          sed -i 's/DB_PASSWORD=root/# DB_PASSWORD=root/' .env.testing
-
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
@@ -45,10 +35,30 @@ jobs:
         run: php artisan key:generate --force
 
       - name: Show application key
-        run: grep APP_KEY .env.testing
+        run: grep APP_KEY .env
 
-      - name: Run migrations for SQLite
-        run: php artisan migrate --force --env=testing
+      - name: Run npm install
+        run: npm install
+
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE laravel;' -uroot -proot
+
+      - name: Set up .env file
+        run: |
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=laravel" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root" >> .env
+
+      - name: Clear config cache
+        run: php artisan config:clear
+
+      - name: Run migrations
+        run: php artisan migrate --force
 
       - name: Run tests with phpunit/phpunit
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
