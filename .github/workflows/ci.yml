@@ -47,9 +47,9 @@ jobs:
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
       - name: Secret
-        run: f4a2d6aed33ce9701669a6eba9b60f0c88c2c5ab
+        run: echo ${{ secrets.SONAR_TOKEN }}
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          SONAR_TOKEN: f4a2d6aed33ce9701669a6eba9b60f0c88c2c5ab
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
