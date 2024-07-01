@@ -40,10 +40,8 @@ class MicrositeService
     {
         $microsite = $this->getMicrositeById($id);
 
-        if (isset($data['logo'])) {
-            if (! is_string($data['logo'])) {
-                $data = $this->saveLogo($data);
-            }
+        if (isset($data['logo']) && !is_string($data['logo'])) {
+            $data = $this->saveLogo($data);
         }
 
         $this->deleteFile($microsite->logo);

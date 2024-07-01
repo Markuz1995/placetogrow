@@ -12,11 +12,6 @@ class CreateAdminUser extends Command
 
     protected $description = 'Create an admin user';
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle(): void
     {
         $email = (string) $this->argument('email');
