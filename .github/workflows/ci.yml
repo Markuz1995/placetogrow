@@ -51,7 +51,7 @@ jobs:
         run: php artisan migrate --force --env=testing
 
       - name: Run tests with phpunit/phpunit
-        run: vendor/bin/phpunit --coverage-clover=coverage.xml --env=testing
+        run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
