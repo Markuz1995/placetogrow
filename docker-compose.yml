@@ -1,0 +1,41 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_DATABASE: laravel
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    command: ["/usr/local/bin/wait-db.sh", "db", "php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+    networks:
+      - laravel-network
+
+  db:
+    image: mysql:8.0
+    container_name: laravel_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - laravel-network
+
+volumes:
+  dbdata:
+
+networks:
+  laravel-network:
+    driver: bridge
