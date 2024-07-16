@@ -1,40 +1,43 @@
 # Proyecto PLACE TO GROW
 
-Este proyecto es una aplicación web desarrollada con Laravel 11 y PHP 8.2. A continuación se presentan las instrucciones para configurar y ejecutar el entorno de desarrollo.
+This project is a web application developed with Laravel 11 and PHP 8.2. Below are the instructions to set up and run the development environment.
 
-## Configuración
+## Project Documentation
+You can access the project documentation [here](https://markuz1995.github.io/placetogrow-wiki/).
 
-### Requisitos
+## Configuration
 
-Antes de comenzar, asegúrate de tener instaladas las siguientes herramientas en tu máquina:
+### Requirements
+
+Before you begin, make sure you have the following tools installed on your machine:
 
 ```bash
-# Herramientas necesarias
+# Required Tools
 - PHP 8.2
 - Composer
-- Node.js y npm
-- MySQL (u otro sistema de base de datos compatible)
+- Node.js and npm
+- MySQL (or another compatible database system)
 - Git
 ```
 
-### Instalar dependencias de PHP:
+### Install PHP dependencies:
 
 ```bash
 composer install
 ```
 
-### Instalar dependencias de Node.js:
+### Install Node.js dependencies:
 
 ```bash
 npm install
 ```
 
-### Copiar el archivo de entorno y configurar las variables:
+### Copy the environment file and configure variables:
 
 ```bash
 cp .env.example .env
 
-# Abre el archivo .env y configura las siguientes variables según tu entorno:
+# Open the .env file and configure the following variables according to your environment:
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -44,49 +47,49 @@ DB_USERNAME=tu_usuario
 DB_PASSWORD=tu_contraseña
 ```
 
-### Generar la clave de la aplicación:
+### Generate the application key:
 
 ```bash
 php artisan key:generate
 ```
 
-### Crear el enlace simbólico para el almacenamiento público:
+### Create symbolic link for public storage:
 
 ```bash
 php artisan storage:link
 ```
 
-### Crear usuarios base con roles (ejemplo):
+### Create base users with roles (example):
 
 ```bash
-# Crear usuario administrador:
+# Create admin user:
 php artisan create:admin admin@admin.com admin
 
-# Crear usuario invitado:
+# Create guest user:
 php artisan create:guest user@user.com user
 ```
 
-### Ejecutar migraciones y sembradores (opcional):
+### Run migrations and seeders (optional):
 
 ```bash
 php artisan migrate --seed
 ```
 
-## Ejecutar el servidor de desarrollo
+## Run development server
 
-### Iniciar el servidor de desarrollo de Laravel:
+### Start Laravel development server:
 
 ```bash
 php artisan serve
 ```
 
-### Compilar los activos de frontend (si estás utilizando Inertia.js, React, y Tailwind CSS):
+### Compile frontend assets (if using Inertia.js, React, and Tailwind CSS):
 
 ```bash
 npm run dev
 ```
 
-### Acceder a la aplicación:
+### Access the application:
 
 ```bash
 # Abre tu navegador web y ve a:
