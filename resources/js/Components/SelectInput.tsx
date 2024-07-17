@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, SelectHTMLAttributes } from 'react';
+import { forwardRef, useImperativeHandle, useRef, SelectHTMLAttributes } from 'react';
 
 interface Option {
     id: string;

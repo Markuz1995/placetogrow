@@ -46,6 +46,11 @@ export default function MicrositeForm({
     const transformedTypes = transformOptions(types);
     const transformedCurrencies = transformOptions(currency);
 
+    const newCategories = categories.map(category => ({
+        id: category.id.toString(),
+        name: category.name,
+    }));
+
     return (
         <form onSubmit={onSubmit} className="p-4 sm:p-8 shadow sm:rounded-lg" encType="multipart/form-data">
             <div className="mb-4">
@@ -87,7 +92,7 @@ export default function MicrositeForm({
                     value={data.category_id}
                     className="mt-1 block w-full"
                     onChange={(e) => setData("category_id", e.target.value)}
-                    options={categories}
+                    options={newCategories}
                 />
                 <InputError message={errors.category_id} className="mt-2" />
             </div>

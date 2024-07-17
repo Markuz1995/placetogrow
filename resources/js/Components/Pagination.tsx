@@ -1,6 +1,16 @@
 import { Link } from "@inertiajs/react";
 
-export default function Pagination({ links }) {
+interface LinkItem {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+interface PaginationProps {
+    links: LinkItem[];
+}
+
+export default function Pagination({ links }: PaginationProps) {
     return (
         <div className="pagination">
             {links.map(link => (

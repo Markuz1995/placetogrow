@@ -8,7 +8,7 @@ export default function Edit({ auth, category }: Readonly<EditProps>) {
         name: category.name || "",
     });
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         put(route("category.update", category.id));
     };
