@@ -7,6 +7,8 @@ use App\Domains\Microsite\Models\Microsite;
 use App\Domains\Microsite\Repositories\MicrositeRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class MicrositeService
 {
@@ -19,12 +21,18 @@ class MicrositeService
 
     public function getAllMicrosites(): LengthAwarePaginator
     {
-        return $this->micrositeRepository->paginate(Constants::RECORDS_PER_PAGE);
+        Log::info('Fetching all microsites');
+        return Cache::remember('microsites', 60, function () {
+            return $this->micrositeRepository->paginate(Constants::RECORDS_PER_PAGE);
+        });
     }
 
     public function getMicrositeById(int $id): ?Microsite
     {
-        return $this->micrositeRepository->find($id);
+        Log::info("Fetching microsite with id: {$id}");
+        return Cache::remember("microsite_{$id}", 60, function () use ($id) {
+            return $this->micrositeRepository->find($id);
+        });
     }
 
     public function createMicrosite(array $data): Microsite
@@ -33,6 +41,7 @@ class MicrositeService
             $data = $this->saveLogo($data);
         }
 
+        Log::info('Creating a new microsite', ['data' => $data]);
         return $this->micrositeRepository->create($data);
     }
 
@@ -46,6 +55,7 @@ class MicrositeService
 
         $this->deleteFile($microsite->logo);
 
+        Log::info("Updating microsite with id: {$id}", ['data' => $data]);
         return $this->micrositeRepository->update($id, $data);
     }
 
@@ -54,7 +64,7 @@ class MicrositeService
         $microsite = $this->getMicrositeById($id);
 
         $this->deleteFile($microsite->logo);
-
+        Log::info("Deleting microsite with id: {$id}");
         return $this->micrositeRepository->delete($id);
     }
 
