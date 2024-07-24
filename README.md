@@ -60,10 +60,10 @@ php artisan storage:link
 
 ```bash
 # Crear usuario administrador:
-php artisan create:admin admin@admin.com admin
+php artisan create:admin
 
 # Crear usuario invitado:
-php artisan create:guest user@user.com user
+php artisan create:guest
 ```
 
 ### Ejecutar migraciones y sembradores (opcional):

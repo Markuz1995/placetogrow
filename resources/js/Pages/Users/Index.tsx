@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { User } from '@/types/user';
@@ -20,8 +20,6 @@ const UsersIndex = ({ auth, users, success }: IndexProps) => {
         if (!window.confirm('Are you sure you want to delete the user?')) {
             return false;
         }
-
-        // Implementar la eliminación del usuario
     };
 
     return (

@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Domains\Category\Repositories\CategoryRepository;
 use App\Domains\Microsite\Repositories\MicrositeRepository;
+use App\Domains\User\Repositories\UserRepository;
 use App\Infrastructure\Persistence\CategoryRepositoryEloquent;
 use App\Infrastructure\Persistence\MicrositeRepositoryEloquent;
+use App\Infrastructure\Persistence\UserRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
         $this->app->bind(MicrositeRepository::class, MicrositeRepositoryEloquent::class);
+        $this->app->bind(UserRepository::class, UserRepositoryEloquent::class);
     }
 
     /**

@@ -2,80 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\user\Services\UserService;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+    protected $userService;
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = $this->userService->getAllUsers();
         return Inertia::render('Users/Index', ['users' => $users]);
     }
 
     public function create()
     {
-        $roles = Role::all();
-        return Inertia::render('Users/Create', ['roles' => $roles]);
+        $roles = Role::all(); //TODO: move to services
+        return Inertia('Users/Create', ['roles' => $roles]);
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'roles' => 'required|array',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
+        $validated = $request->validated();
+        $user = $this->userService->createUser($validated);
         $user->assignRole($request->roles);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return to_route('users.index', $user)->with('success', 'User was created');
     }
 
-    public function edit(User $user)
+    public function show(int $id)
+    {
+        $user = $this->userService->getUserById($id);
+        return inertia('Users/Show', ['user' => $user]);
+    }
+
+    public function edit(int $id)
     {
         $roles = Role::all();
-        return Inertia::render('Users/Edit', [
-            'user' => $user->load('roles'),
-            'roles' => $roles,
-        ]);
+        $user = $this->userService->getUserById($id);
+        return inertia('Users/Edit', ['user' => $user, 'roles' => $roles]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, int $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'roles' => 'required|array',
-        ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
+        $validated = $request->validated();
+        $this->userService->updateUser($id, $validated);
 
-        if ($request->filled('password')) {
-            $request->validate(['password' => 'confirmed|min:8']);
-            $user->update(['password' => bcrypt($request->password)]);
-        }
+        // if ($request->filled('password')) {
+        //     $request->validate(['password' => 'confirmed|min:8']);
+        //     $user->update(['password' => bcrypt($request->password)]);
+        // }
 
-        $user->syncRoles($request->roles);
-
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        // $user->syncRoles($request->roles);
+        return to_route('users.index')->with('success', 'User was updated');
     }
 
-    public function destroy(User $user)
+    public function destroy(int $id)
     {
-        $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        $this->userService->deleteUser($id);
+        return to_route('users.index')->with('success', 'User was deleted');
     }
 }
