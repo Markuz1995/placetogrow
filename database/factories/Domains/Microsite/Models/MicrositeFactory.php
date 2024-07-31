@@ -1,9 +1,10 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domains\Microsite\Models;
 
 use App\Constants\Constants;
 use App\Domains\Microsite\Models\Microsite;
+use Database\Factories\Domains\Category\Models\CategoryFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MicrositeFactory extends Factory

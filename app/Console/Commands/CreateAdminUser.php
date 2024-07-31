@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Domains\User\Models\User as ModelsUser;
 use Illuminate\Console\Command;
-use App\Models\User;
 use Spatie\Permission\Models\Role;
 
 class CreateAdminUser extends Command
@@ -20,7 +20,7 @@ class CreateAdminUser extends Command
 
         $hashedPassword = bcrypt($password);
 
-        $user = User::create([
+        $user = ModelsUser::create([
             'name' => $name,
             'email' => $email,
             'password' => $hashedPassword,

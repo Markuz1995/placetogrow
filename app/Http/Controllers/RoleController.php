@@ -2,44 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Constants;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::with('permissions')->get();
+        $roles = Role::paginate(Constants::RECORDS_PER_PAGE);
         return Inertia::render('Roles/Index', ['roles' => $roles]);
     }
 
     public function create()
     {
-        $permissions = Permission::all();
-        return Inertia::render('Roles/Create', ['permissions' => $permissions]);
+        return Inertia::render('Roles/Create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:roles',
-            'permissions' => 'required|array',
         ]);
 
-        $role = Role::create(['name' => $request->name]);
-        $role->syncPermissions($request->permissions);
+        Role::create(['name' => $request->name]);
 
         return redirect()->route('roles.index')->with('success', 'Role created successfully.');
     }
 
     public function edit(Role $role)
     {
-        $permissions = Permission::all();
         return Inertia::render('Roles/Edit', [
-            'role' => $role->load('permissions'),
-            'permissions' => $permissions,
+            'role' => $role,
         ]);
     }
 
@@ -47,11 +42,9 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
-            'permissions' => 'required|array',
         ]);
 
         $role->update(['name' => $request->name]);
-        $role->syncPermissions($request->permissions);
 
         return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
     }

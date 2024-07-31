@@ -6,7 +6,6 @@ use App\Constants\Constants;
 use App\Domains\Category\Models\Category;
 use App\Domains\Category\Repositories\CategoryRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class CategoryService
@@ -21,17 +20,13 @@ class CategoryService
     public function getAllCategories(): LengthAwarePaginator
     {
         Log::info('Fetching all categories');
-        return Cache::remember('categories', 60, function () {
-            return $this->categoryRepository->paginate(Constants::RECORDS_PER_PAGE);
-        });
+        return $this->categoryRepository->paginate(Constants::RECORDS_PER_PAGE);
     }
 
     public function getCategoryById(int $id): ?Category
     {
         Log::info("Fetching category with id: {$id}");
-        return Cache::remember("category_{$id}", 60, function () use ($id) {
-            return $this->categoryRepository->find($id);
-        });
+        return $this->categoryRepository->find($id);
     }
 
     public function createCategory(array $data): Category
@@ -54,8 +49,6 @@ class CategoryService
 
     public function getDataForSelect()
     {
-        return Cache::remember('getDataForSelect', 60, function () {
-            return $this->categoryRepository->getDataForSelect();
-        });
+        return $this->categoryRepository->getDataForSelect();
     }
 }

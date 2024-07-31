@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Constants\Constants;
 use App\Domains\Category\Services\CategoryService;
 use App\Domains\Microsite\Services\MicrositeService;
+use App\Domains\User\Models\User;
 use App\Http\Requests\MicrositeRequest;
+use Illuminate\Support\Facades\Auth;
 
 class MicrositeController extends Controller
 {
@@ -22,10 +24,15 @@ class MicrositeController extends Controller
     public function index()
     {
         $microsites = $this->micrositeService->getAllMicrosites();
+        $user = Auth::user();
+        $user = User::with('roles')->find($user->id);
 
         return inertia('Microsite/Index', [
             'microsites' => $microsites,
             'success' => session('success'),
+            'auth' => [
+                'user' => $user
+            ]
         ]);
     }
 

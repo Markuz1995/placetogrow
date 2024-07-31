@@ -69,7 +69,11 @@ php artisan create:guest
 ### Ejecutar migraciones y sembradores (opcional):
 
 ```bash
+# Migrations and seeds
 php artisan migrate --seed
+
+# Seeds
+php artisan db:seed
 ```
 
 ## Ejecutar el servidor de desarrollo

@@ -16,7 +16,7 @@ class UserRepositoryEloquent implements UserRepository
 
     public function find(int $id): ?User
     {
-        return User::find($id);
+        return User::with('roles')->find($id);
     }
 
     public function create(array $data): User

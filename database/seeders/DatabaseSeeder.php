@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(([
             CategorySeeder::class,
+            MicrositeSeeder::class,
         ]));
     }
 }

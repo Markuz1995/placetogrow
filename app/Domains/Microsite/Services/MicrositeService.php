@@ -7,7 +7,6 @@ use App\Domains\Microsite\Models\Microsite;
 use App\Domains\Microsite\Repositories\MicrositeRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class MicrositeService
@@ -22,23 +21,19 @@ class MicrositeService
     public function getAllMicrosites(): LengthAwarePaginator
     {
         Log::info('Fetching all microsites');
-        return Cache::remember('microsites', 60, function () {
-            return $this->micrositeRepository->paginate(Constants::RECORDS_PER_PAGE);
-        });
+        return $this->micrositeRepository->paginate(Constants::RECORDS_PER_PAGE_MICROSITE);
     }
 
     public function getMicrositeById(int $id): ?Microsite
     {
         Log::info("Fetching microsite with id: {$id}");
-        return Cache::remember("microsite_{$id}", 60, function () use ($id) {
-            return $this->micrositeRepository->find($id);
-        });
+        return $this->micrositeRepository->find($id);
     }
 
     public function createMicrosite(array $data): Microsite
     {
-        if (isset($data['logo'])) {
-            $data = $this->saveLogo($data);
+        if (isset($data['logo']) && $data['logo']->isValid()) {
+            $data['logo'] = $this->saveLogo($data['logo']);
         }
 
         Log::info('Creating a new microsite', ['data' => $data]);
@@ -47,42 +42,41 @@ class MicrositeService
 
     public function updateMicrosite(int $id, array $data): bool
     {
+        Log::info("Updating microsite with id: {$id}", ['data' => $data]);
         $microsite = $this->getMicrositeById($id);
 
-        if (isset($data['logo']) && !is_string($data['logo'])) {
-            $data = $this->saveLogo($data);
+        if (isset($data['logo']) && $data['logo']->isValid()) {
+            $oldLogoPath = $microsite->logo;
+            $data['logo'] = $this->saveLogo($data['logo']);
+            $this->deleteFile($oldLogoPath);
         }
 
-        $this->deleteFile($microsite->logo);
-
-        Log::info("Updating microsite with id: {$id}", ['data' => $data]);
         return $this->micrositeRepository->update($id, $data);
     }
 
     public function deleteMicrosite(int $id): bool
     {
         $microsite = $this->getMicrositeById($id);
+        if ($microsite && $microsite->logo) {
+            $this->deleteFile($microsite->logo);
+        }
 
-        $this->deleteFile($microsite->logo);
         Log::info("Deleting microsite with id: {$id}");
         return $this->micrositeRepository->delete($id);
     }
 
-    private function saveLogo(array $data): array
+    private function saveLogo($file): string
     {
-        $originalName = $data['logo']->getClientOriginalName();
-        $data['logo']->storeAs('public/microsites', $originalName);
-        $data['logo'] = "storage/microsites/{$originalName}";
-
-        return $data;
+        $originalName = $file->getClientOriginalName();
+        $path = $file->storeAs('public/microsites', $originalName);
+        return "storage/microsites/{$originalName}";
     }
 
-    private function deleteFile(string $path): void
+    private function deleteFile(string $filePath): void
     {
-        $relativePath = str_replace('storage/', '', $path);
-
-        if (Storage::disk('public')->exists($relativePath)) {
-            Storage::disk('public')->delete($relativePath);
+        $relativePath = str_replace('storage/', 'public/', $filePath);
+        if (Storage::exists($relativePath)) {
+            Storage::delete($relativePath);
         }
     }
 }

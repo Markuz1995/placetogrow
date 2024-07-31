@@ -9,6 +9,8 @@ import { User } from '@/types';
 export default function AuthenticatedLayout({ user, header, children }: PropsWithChildren<{ user: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
+    const isAdmin = user?.roles?.find(role => role.name === 'admin') !== undefined;
+
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -28,13 +30,19 @@ export default function AuthenticatedLayout({ user, header, children }: PropsWit
                                 <NavLink href={route('microsite.index')} active={route().current('microsite.index')}>
                                     Microsite
                                 </NavLink>
-                                <NavLink href={route('category.index')} active={route().current('category.index')}>
-                                    Category
-                                </NavLink>
-                                <NavLink href={route('users.index')} active={route().current('users.index')}>
-                                    Users
-                                </NavLink>
-
+                            {isAdmin && (
+                                <>
+                                    <NavLink href={route('category.index')} active={route().current('category.index')}>
+                                        Category
+                                    </NavLink>
+                                    <NavLink href={route('users.index')} active={route().current('users.index')}>
+                                        Users
+                                    </NavLink>
+                                    <NavLink href={route('roles.index')} active={route().current('roles.index')}>
+                                        Roles
+                                    </NavLink>
+                                </>
+                            )}
                             </div>
                         </div>
 

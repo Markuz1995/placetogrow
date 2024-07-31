@@ -21,7 +21,7 @@ export default function Index({ auth, categories, success }: Readonly<IndexProps
             user={auth.user}
             header={
                 <div className="flex justify-between items-center">
-                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">List of categories</h2>
                     <Link href={route('category.create')} className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
                         Add new
                     </Link>
@@ -53,7 +53,7 @@ export default function Index({ auth, categories, success }: Readonly<IndexProps
                                 <tbody>
                                     {categories.data.map((category, index) => (
                                         <tr key={category.id} className="bg-white border-b dark:boder-gray-700">
-                                            <td className="px-3 py-2">{index + 1}</td>
+                                            <td className="px-3 py-2">{category.id}</td>
                                             <td className="px-3 py-2">{category.name}</td>
                                             <td className="px-3 py-2">
                                                 <Link

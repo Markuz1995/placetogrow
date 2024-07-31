@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { User } from '@/types/user';
 import Pagination from '@/Components/Pagination';
@@ -20,10 +20,17 @@ const UsersIndex = ({ auth, users, success }: IndexProps) => {
         if (!window.confirm('Are you sure you want to delete the user?')) {
             return false;
         }
+
+        router.delete(route('users.destroy', user.id))
     };
 
     return (
-        <AuthenticatedLayout user={auth.user} header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Users</h2>}>
+        <AuthenticatedLayout user={auth.user} header={<div className="flex justify-between items-center">
+            <h2 className="font-semibold text-xl text-gray-800 leading-tight">List of users</h2>
+            <Link href={route('users.create')} className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
+                Add new
+            </Link>
+        </div>}>
             <Head title="Users" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

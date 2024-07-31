@@ -5,6 +5,10 @@ import { UserFormProps } from "@/types/user";
 import { Link } from "@inertiajs/react";
 
 export default function Form({ data, setData, errors, onSubmit, isEditing, roles }: Readonly<UserFormProps>) {
+    // Asegúrate de que 'data.roles' contiene los IDs de los roles del usuario
+
+    const rolesAsStrings = data.roles.map(role => String(role));
+
     return (
         <form onSubmit={onSubmit} className="p-4 sm:p-8 shadow sm:rounded-lg">
             <div>
@@ -65,13 +69,13 @@ export default function Form({ data, setData, errors, onSubmit, isEditing, roles
                 <select
                     id="user_roles"
                     name="roles"
-                    value={data.roles}
+                    value={rolesAsStrings}
                     onChange={(e) => setData("roles", Array.from(e.target.selectedOptions, option => parseInt(option.value)))}
                     className="mt-1 block w-full"
                     multiple
                 >
                     {roles.map(role => (
-                        <option key={role.id} value={role.id}>{role.name}</option>
+                        <option key={role.id} value={role.id} selected={rolesAsStrings.includes(role.id.toString())}>{role.name}</option>
                     ))}
                 </select>
                 <InputError message={errors.roles} className="mt-2" />

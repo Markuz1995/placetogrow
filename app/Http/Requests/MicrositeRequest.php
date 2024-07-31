@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Constants\Constants;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class MicrositeRequest extends FormRequest
 {
@@ -26,7 +27,12 @@ class MicrositeRequest extends FormRequest
         $currrency = implode(',', Constants::MICROSITE_CURRENCY);
 
         return [
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('microsites')->ignore($this->microsite),
+            ],
             'logo' => '',
             'category_id' => 'required|exists:categories,id',
             'currency' => "required|string|max:3|in:{$currrency}",

@@ -20,24 +20,6 @@ export default function Form({ data, setData, errors, onSubmit, isEditing, permi
                 />
                 <InputError message={errors.name} className="mt-2" />
             </div>
-
-            <div className="mt-4">
-                <InputLabel htmlFor="role_permissions" value="Permissions" />
-                <select
-                    id="role_permissions"
-                    name="permissions"
-                    value={data.permissions}
-                    onChange={(e) => setData("permissions", Array.from(e.target.selectedOptions, option => parseInt(option.value)))}
-                    className="mt-1 block w-full"
-                    multiple
-                >
-                    {permissions.map(permission => (
-                        <option key={permission.id} value={permission.id}>{permission.name}</option>
-                    ))}
-                </select>
-                <InputError message={errors.permissions} className="mt-2" />
-            </div>
-
             <div className="mt-4 text-right">
                 <Link
                     href={route("roles.index")}

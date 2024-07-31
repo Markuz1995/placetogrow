@@ -15,7 +15,7 @@ export default function Edit({ auth, user, roles }: Readonly<EditProps>) {
         email: user.email || '',
         password: '',
         password_confirmation: '',
-        roles: user.roles.map(role => role.id),
+        roles: user && user.roles ? user.roles.map(role => role.id) : [],
     });
 
     const onSubmit = (e: React.FormEvent) => {
@@ -29,7 +29,7 @@ export default function Edit({ auth, user, roles }: Readonly<EditProps>) {
             header={
                 <div className="flex justify-between items-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                        Edit user
+                        Edit User
                     </h2>
                 </div>
             }
@@ -39,7 +39,7 @@ export default function Edit({ auth, user, roles }: Readonly<EditProps>) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <UserForm
+                        <Form
                             data={data}
                             setData={setData}
                             errors={errors}
